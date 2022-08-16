@@ -7,7 +7,7 @@ const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const passport = require('passport')
 const session = require('express-session')
-const MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo')(session)
 const connectDB = require('./config/db')
 
 // Load config
@@ -66,7 +66,7 @@ app.engine(
   })
 )
 app.set('view engine', 'handlebars')
-app.set('views', './views')
+app.set('views', path.join(__dirname, 'views'))
 
 
 // Sessions
@@ -75,7 +75,7 @@ app.use(
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({mongoUrl: process.env.MONGO_URI,}),
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
   })
 )
 
