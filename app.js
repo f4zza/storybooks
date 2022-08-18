@@ -52,8 +52,8 @@ const {
 
 // Handlebars
 app.engine(
-  'handlebars',
-  exphbs.engine({
+  '.hbs',
+  exphbs({
     helpers: {
       formatDate,
       stripTags,
@@ -65,9 +65,7 @@ app.engine(
     extname: '.hbs',
   })
 )
-app.set('view engine', 'handlebars')
-app.set('views', path.join(__dirname, 'views'))
-
+app.set('view engine', '.hbs')
 
 // Sessions
 app.use(
